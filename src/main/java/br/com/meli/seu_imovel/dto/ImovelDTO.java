@@ -19,10 +19,10 @@ public class ImovelDTO {
             message = "O nome da propriedade deve começar com uma letra maiúscula."
     )
     @Size(max = 30,message = "O comprimento do nome não pode exceder 30 caracteres.")
-    private String name;
+    private String propName;
     @NotBlank(message = "O bairro não pode estar vazio.")
     @Size(max = 45,message = "O comprimento do bairro não pode exceder 30 caracteres.")
-    private String district;
+    private String propDistrict;
     @NotNull(message = "O valor do metro quadrado não pode estar vazio.")
     private BigDecimal valueDistrictM2;
     @NotEmpty
