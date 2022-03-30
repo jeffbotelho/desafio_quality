@@ -3,11 +3,13 @@ package br.com.meli.seu_imovel.service;
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
 import br.com.meli.seu_imovel.dto.ImovelDTO;
+import br.com.meli.seu_imovel.exceptions.DistrictNotExistExepection;
 import br.com.meli.seu_imovel.repositories.BairroRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ImoveisService {
@@ -19,34 +21,41 @@ public class ImoveisService {
     }
 
     public ImovelDTO gerarRelatorio(ImovelDTO imovelDTO){
+
+        Optional<String> district = bairroRepository.findByName(imovelDTO.getPropDistrict());
+
+        if (district.isEmpty()) {
+            throw new DistrictNotExistExepection("Distrito não valido!");
+        }
+
         //Req04
         calcularArea(imovelDTO);
 
         //Req01
-        Double calculaTamanho = calculaTamanhoPropriedade(imovelDTO.getComodos());
-        imovelDTO.setTamanahoTotal(calculaTamanho);
+        Double calculaTamanho = calculaTamanhoPropriedade(imovelDTO.getRooms());
+        imovelDTO.setTotalArea(calculaTamanho);
 
         //Req02
         BigDecimal calculaValorVizinhaca = calculaValorDeAcordoComVizinhaca(imovelDTO.getValueDistrictM2(), calculaTamanho);
-        imovelDTO.setValorTotal(calculaValorVizinhaca);
+        imovelDTO.setTotalPrice(calculaValorVizinhaca);
 
         //Req03
         ComodoDTO maiorComodo = determinaMaiorComodo(imovelDTO);
-        imovelDTO.setMaiorComodo(maiorComodo);
+        imovelDTO.setBigestRoom(maiorComodo);
 
         return imovelDTO;
     }
     // Requisito 04 , determina a quantidade de metros em cada comodo
     private void calcularArea(ImovelDTO imovelDTO) {
 
-        List<ComodoDTO> comodos = imovelDTO.getComodos();
+        List<ComodoDTO> comodos = imovelDTO.getRooms();
         for (ComodoDTO c: comodos){
-            c.setArea(c.getWidth() * c.getLength());
+            c.setArea(c.getRoomWidth() * c.getRoomLength());
         }
     }
     // Requisito 01 , Calcula o total de metro de uma propriedade
     private Double calculaTamanhoPropriedade(List<ComodoDTO> listComodoDTO){
-        return listComodoDTO.stream().reduce(0 ,(acumulador, item) ->acumulador + item.getArea(), Double::sum );
+        return listComodoDTO.stream().reduce(0D,(acumulador, item) -> acumulador + item.getArea(), Double::sum);
     }
 
     // Requisito 02, Determina valor da propriedade de acordo com a vizinhaça
@@ -55,6 +64,6 @@ public class ImoveisService {
     }
     // Requisito 03, Determina qual maior comodo
     private ComodoDTO determinaMaiorComodo(ImovelDTO imovelDTO){
-       return imovelDTO.getComodos().stream().max((x,y)-> x.getArea().compareTo(y.getArea())).get();
+       return imovelDTO.getRooms().stream().max((x,y)-> x.getArea().compareTo(y.getArea())).get();
     }
 }
