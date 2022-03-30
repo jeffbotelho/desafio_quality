@@ -9,6 +9,11 @@ import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+/*
+ * formata os dados do imovel, sendo utilizado para receber a requisição como para resposta
+ * @Author Rogério Lambert
+ * */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

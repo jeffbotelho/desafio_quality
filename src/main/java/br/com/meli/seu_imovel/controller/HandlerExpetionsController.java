@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 
+/*
+ * classe contem controladores para tratar respostas de exceptions
+ * @Author Rogério Lambert
+ * */
+
 @RestControllerAdvice
 public class HandlerExpetionsController {
     @ExceptionHandler(MethodArgumentNotValidException.class)

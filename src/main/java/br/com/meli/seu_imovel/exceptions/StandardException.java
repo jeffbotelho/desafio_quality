@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import java.time.Instant;
 
 /*
- *
+ * trata as exception relacionadas às validações, devolvendo uma mensagem mais inteligível
+ * @Author Rogério Lambert
  * */
 
 @AllArgsConstructor

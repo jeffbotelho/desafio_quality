@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/*
+ * trata as exception relacionadas às validações, devolvendo uma mensagem mais inteligível
+ * @Author Rogério Lambert
+ * */
+
 @RestController
 public class ImoveisController {
 

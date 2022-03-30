@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.*;
 
+/* Formata os dados de um comodo que compõem a lista de comodos do ImovelDTO
+ *@author Rogério Lambert
+ * */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
