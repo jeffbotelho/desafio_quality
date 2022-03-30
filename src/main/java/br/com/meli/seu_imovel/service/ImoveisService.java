@@ -25,7 +25,7 @@ public class ImoveisService {
         Optional<String> district = bairroRepository.findByName(imovelDTO.getPropDistrict());
 
         if (district.isEmpty()) {
-            throw new DistrictNotExistExepection("Distrito não valido!");
+            throw new DistrictNotExistExepection("Distrito não válido!");
         }
 
         //Req04
