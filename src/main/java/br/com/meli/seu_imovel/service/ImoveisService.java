@@ -63,7 +63,7 @@ public class ImoveisService {
         return valueDistrictM2.multiply(BigDecimal.valueOf(tamanhoTotal));
     }
     // Requisito 03, Determina qual maior comodo
-    private ComodoDTO determinaMaiorComodo(ImovelDTO imovelDTO){
+   private ComodoDTO determinaMaiorComodo(ImovelDTO imovelDTO){
        return imovelDTO.getRooms().stream().max((x,y)-> x.getArea().compareTo(y.getArea())).get();
     }
 }
