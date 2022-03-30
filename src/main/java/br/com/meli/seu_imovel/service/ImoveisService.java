@@ -3,6 +3,7 @@ package br.com.meli.seu_imovel.service;
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
 import br.com.meli.seu_imovel.dto.ImovelDTO;
+import br.com.meli.seu_imovel.repositories.BairroRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -10,6 +11,13 @@ import java.util.List;
 
 @Service
 public class ImoveisService {
+
+    private BairroRepository bairroRepository;
+
+    public ImoveisService(BairroRepository bairroRepository) {
+        this.bairroRepository = bairroRepository;
+    }
+
     public ImovelDTO gerarRelatorio(ImovelDTO imovelDTO){
         //Req04
         calcularArea(imovelDTO);
