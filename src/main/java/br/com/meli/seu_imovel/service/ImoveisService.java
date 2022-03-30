@@ -52,6 +52,7 @@ public class ImoveisService {
         for (ComodoDTO c: comodos){
             c.setArea(c.getRoomWidth() * c.getRoomLength());
         }
+
     }
     // Requisito 01 , Calcula o total de metro de uma propriedade
     private Double calculaTamanhoPropriedade(List<ComodoDTO> listComodoDTO){
