@@ -18,17 +18,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImovelDTO {
-    @NotBlank(message = "O nome da propriedade não pode estar vazio.")
+    @NotBlank(message = "O nome da propriedade não pode estar vazio. (Nome)")
     @Pattern(regexp=
-            "[A-ZÀ-Ú][A-z À-ú]*",
+            "[A-ZÀ-Ú][A-z À-ú0-9]*",
             message = "O nome da propriedade deve começar com uma letra maiúscula."
     )
     @Size(max = 30,message = "O comprimento do nome não pode exceder 30 caracteres.")
     private String propName;
-    @NotBlank(message = "O bairro não pode estar vazio.")
+    @NotBlank(message = "O bairro não pode estar vazio. (Distrito)")
     @Size(max = 45,message = "O comprimento do bairro não pode exceder 30 caracteres.")
     private String propDistrict;
-    @NotNull(message = "O valor do metro quadrado não pode estar vazio.")
+    @NotNull(message = "O valor do metro quadrado não pode estar vazio. (Valor do Distrito)")
     private BigDecimal valueDistrictM2;
     @NotEmpty
     @Valid

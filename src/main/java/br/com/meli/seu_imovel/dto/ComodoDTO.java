@@ -14,14 +14,14 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ComodoDTO {
-    @NotBlank(message = "O campo não pode estar vazio.")
+    @NotBlank(message = "O campo não pode estar vazio. (nome do quarto)")
     @Pattern(regexp=
-            "[A-ZÀ-Ú][A-z À-ú]*",
+            "[A-ZÀ-Ú][A-z À-ú0-9]*",
             message = "O campo deve começar com uma letra maiúscula."
     )
     @Size(max = 30,message = "O campo não pode exceder 30 caracteres.")
     private String roomName;
-    @NotNull(message = "A largura não pode estar vazia.")
+    @NotNull(message = "A largura não pode estar vazia. ()")
     @Max(value = 25,message = "A largura máxima permitida por cômodo é de 25 metros.")
     private Double roomWidth;
     @NotNull(message = "O comprimento não pode estar vázio.")

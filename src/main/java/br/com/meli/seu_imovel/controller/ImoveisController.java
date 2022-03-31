@@ -22,11 +22,6 @@ public class ImoveisController {
     @Autowired
     private ImoveisService imoveisService;
 
-    @GetMapping("/ping")
-    public String ping() {
-        return "pong";
-    }
-
     @PostMapping("/relatorio-de-imovel")
     public ResponseEntity<ImovelDTO> getImmobileReport (@Valid @RequestBody  ImovelDTO imovel) {
         return ResponseEntity.ok(imoveisService.gerarRelatorio(imovel));
