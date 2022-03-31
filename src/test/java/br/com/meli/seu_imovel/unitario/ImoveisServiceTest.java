@@ -137,7 +137,7 @@ public class ImoveisServiceTest {
         // setaup
         ImovelDTO imovelDTO = geraImovelTeste();
 
-        Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("encontrado"));
+        Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("centro"));
 
         ImovelDTO response = imoveisService.gerarRelatorio(imovelDTO);
 
