@@ -1,7 +1,7 @@
 package br.com.meli.seu_imovel.controller;
 
 import br.com.meli.seu_imovel.dto.ImovelDTO;
-import br.com.meli.seu_imovel.service.ImoveisService;
+import br.com.meli.seu_imovel.unitario.ImoveisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
