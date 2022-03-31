@@ -70,6 +70,25 @@ public class RoomWidthTest {
                         .value("A largura máxima permitida por cômodo é de 25 metros."));
     }
 
+    /*
+     * @author Weverton Bruno
+     * */
+    @Test
+    @DisplayName("Deve retornar uma exceção o bairro não for encontrado no repositório")
+    public void itShouldReturnAValidationExceptionWhenDistrictNotExists() throws Exception{
+        ImovelDTO imovelDTO = geraImovelTeste();
+        imovelDTO.setPropDistrict("Centro");
+
+        String payload = objectMapper.writeValueAsString(imovelDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/relatorio-de-imovel")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg")
+                        .value("Distrito não válido!"));
+    }
+
     private ImovelDTO geraImovelTeste() {
         ImovelDTO imovelDTO = new ImovelDTO();
         imovelDTO.setPropName("Imovel1");
