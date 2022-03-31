@@ -32,8 +32,8 @@ public class BiggerRoomTest {
     public void testeMaiorQuarto(){
         ImovelDTO imovelDTO = geraImovelTeste();
         Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("centro"));
-        ImovelDTO maiorComodo = imoveisService.gerarRelatorio(imovelDTO);
-        ComodoDTO bigestRoom = maiorComodo.getBigestRoom();
+        ImovelDTO imovelRetorno = imoveisService.gerarRelatorio(imovelDTO);
+        ComodoDTO bigestRoom = imovelRetorno.getBigestRoom();
         Assertions.assertEquals("comodo3",bigestRoom.getRoomName());
     }
     @Test
@@ -43,8 +43,8 @@ public class BiggerRoomTest {
         imovelDTO.getRooms().get(0).setRoomLength(5D);
         imovelDTO.getRooms().get(0).setRoomWidth(40D);
         Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("centro"));
-        ImovelDTO maiorComodo = imoveisService.gerarRelatorio(imovelDTO);
-        ComodoDTO bigestRoom = maiorComodo.getBigestRoom();
+        ImovelDTO imovelRetorno = imoveisService.gerarRelatorio(imovelDTO);
+        ComodoDTO bigestRoom = imovelRetorno.getBigestRoom();
         Assertions.assertEquals("comodo1",bigestRoom.getRoomName());
     }
     @Test
@@ -52,9 +52,9 @@ public class BiggerRoomTest {
     public void testeAreaImovel(){
         ImovelDTO imovelDTO = geraImovelTeste();
         Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("centro"));
-        ImovelDTO maiorComodo = imoveisService.gerarRelatorio(imovelDTO);
-        ComodoDTO bigestRoom = maiorComodo.getBigestRoom();
-        Assertions.assertEquals(200D,bigestRoom.getArea());
+        ImovelDTO imovelRetorno = imoveisService.gerarRelatorio(imovelDTO);
+        double totalArea  = imovelRetorno.getTotalArea();
+        Assertions.assertEquals(530D,totalArea);
     }
 
     private ImovelDTO geraImovelTeste() {
