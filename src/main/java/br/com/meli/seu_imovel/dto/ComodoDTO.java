@@ -21,11 +21,11 @@ public class ComodoDTO {
     )
     @Size(max = 30,message = "O campo roomName (nome do comodo) nao pode exceder 30 caracteres.")
     private String roomName;
-    @NotNull(message = "A largura não pode estar vazia. ()")
+    @NotNull(message = "A largura não pode estar vazia. (Largura do Quarto)")
     @Max(value = 25,message = "A largura máxima permitida por cômodo é de 25 metros.")
     private Double roomWidth;
-    @NotNull(message = "O comprimento não pode estar vázio.")
-    @Max(value = 33,message = "O comprimento máximo permitidio por cômodo é de 33 metros.")
+    @NotNull(message = "O comprimento não pode estar vázio. (Comprimento do quarto)")
+    @Max(value = 33,message = "O comprimento máximo permitido por cômodo é de 33 metros.")
     private Double roomLength;
     private Double area;
 }

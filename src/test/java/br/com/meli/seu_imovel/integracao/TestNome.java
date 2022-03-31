@@ -26,7 +26,7 @@ import java.util.List;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
 @SpringBootTest
-public class ImoveisControllerTest {
+public class TestNome {
 
     @Autowired
     private MockMvc mockMvc; // faz uma request
@@ -55,7 +55,7 @@ public class ImoveisControllerTest {
     // decidimos fazer em grupo o caminho feliz
     @Test
     @DisplayName("Testando o caminho feliz.")
-    public void testandoCaminhoFeliz () throws Exception {
+    public void testandoCaminhoFeliz() throws Exception {
         ImovelDTO imovelDTO = geraImovelTeste();
 
         String payloadImovel = objectMapper.writeValueAsString(imovelDTO);
@@ -78,4 +78,55 @@ public class ImoveisControllerTest {
         Assertions.assertEquals(530D, imovelObjeto.getTotalArea());
     }
 
+    @Test
+    @DisplayName("Testando propName com primeira letra minuscula.")
+    public void testandoPropNomeDoImovelComLetraMinuscula() throws Exception {
+        ImovelDTO imovelDTO = geraImovelTeste();
+        imovelDTO.setPropName("imovel");
+
+        String payload = objectMapper.writeValueAsString(imovelDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/relatorio-de-imovel")
+                .contentType(MediaType.APPLICATION_JSON).content(payload))
+                .andExpect(MockMvcResultMatchers
+                        .status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg")
+                        .value("O nome da propriedade deve começar com uma letra maiúscula."));
+    }
+
+    @Test
+    @DisplayName("Testando propname com null.")
+    public void testandoPropNomeDoImovelComNull() throws Exception {
+        ImovelDTO imovelDTO = geraImovelTeste();
+        imovelDTO.setPropName(null);
+
+        String payload = objectMapper.writeValueAsString(imovelDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/relatorio-de-imovel")
+                .contentType(MediaType.APPLICATION_JSON).content(payload))
+                .andExpect(MockMvcResultMatchers
+                        .status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg")
+                        .value("O nome da propriedade não pode estar vazio. (Nome)"));
+    }
+
+    @Test
+    @DisplayName("Testando propname com mais de 30 caracteres.")
+    public void testandoPropNomeDoImovelCom31Caracteres() throws Exception {
+        ImovelDTO imovelDTO = geraImovelTeste();
+        imovelDTO.setPropName("Iiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");
+
+        String payload = objectMapper.writeValueAsString(imovelDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/relatorio-de-imovel")
+                .contentType(MediaType.APPLICATION_JSON).content(payload))
+                .andExpect(MockMvcResultMatchers
+                        .status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg")
+                        .value("O comprimento do nome não pode exceder 30 caracteres."));
+    }
 }
+

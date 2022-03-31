@@ -1,4 +1,4 @@
-package br.com.meli.seu_imovel.unitario;
+package br.com.meli.seu_imovel.services;
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
 import br.com.meli.seu_imovel.dto.ImovelDTO;
@@ -137,7 +137,7 @@ public class ImoveisServiceTest {
         // setaup
         ImovelDTO imovelDTO = geraImovelTeste();
 
-        Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("encontrado"));
+        Mockito.when(bairroRepository.findByName("centro")).thenReturn(Optional.of("centro"));
 
         ImovelDTO response = imoveisService.gerarRelatorio(imovelDTO);
 

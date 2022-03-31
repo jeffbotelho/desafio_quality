@@ -26,9 +26,10 @@ public class ImovelDTO {
     @Size(max = 30,message = "O comprimento do nome não pode exceder 30 caracteres.")
     private String propName;
     @NotBlank(message = "O bairro não pode estar vazio. (Distrito)")
-    @Size(max = 45,message = "O comprimento do bairro não pode exceder 30 caracteres.")
+    @Size(max = 45,message = "O comprimento do bairro não pode exceder 45 caracteres.")
     private String propDistrict;
     @NotNull(message = "O valor do metro quadrado não pode estar vazio. (Valor do Distrito)")
+    @Digits(integer = 11, fraction = 2, message = "O valor do metro quadrado nao pode ser maior que 13 digitos. (Valor Distrito)")
     private BigDecimal valueDistrictM2;
     @NotEmpty
     @Valid

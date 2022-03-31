@@ -1,4 +1,4 @@
-package br.com.meli.seu_imovel.unitario;
+package br.com.meli.seu_imovel.services;
 
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
