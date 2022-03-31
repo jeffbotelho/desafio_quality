@@ -2,6 +2,7 @@ package br.com.meli.seu_imovel.integracao;
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
 import br.com.meli.seu_imovel.dto.ImovelDTO;
+import br.com.meli.seu_imovel.exceptions.StandardException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
@@ -137,7 +138,7 @@ public class ImoveisControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(payload))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("O comprimento não pode estar vazio."));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.msg").value("O comprimento não pode estar vazio. (Comprimento do quarto)"));
 
     }
     /*
@@ -156,7 +157,7 @@ public class ImoveisControllerTest {
                 .content(payload))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.msg")
-                        .value("O comprimento máximo permitidio por cômodo é de 33 metros."));
+                        .value("O comprimento máximo permitido por cômodo é de 33 metros."));
     }
 
     // __________________________________________________________________
@@ -320,5 +321,106 @@ public class ImoveisControllerTest {
     }
 
     // __________________________________________________________________
+
+    /*
+     * testa validacao de roomName inexistente
+     * @Author Rogério Lambert
+     * */
+    @Test
+    @DisplayName("Testa se um erro eh retornado quando um campo de roomName eh inexistente")
+    public void testaSeExcecaoParaRoomNameInexistente () throws Exception {
+        ImovelDTO imovelDTO = geraImovelTeste();
+        ComodoDTO roomWithNameEmpyt = new ComodoDTO();
+        roomWithNameEmpyt.setRoomWidth(13D);
+        roomWithNameEmpyt.setRoomLength(13D);
+        List<ComodoDTO> rooms = imovelDTO.getRooms();
+        rooms.add(roomWithNameEmpyt);
+        imovelDTO.setRooms(rooms);
+
+        String payloadImovel = objectMapper.writeValueAsString(imovelDTO);
+
+        // faz requisição
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                .post("/relatorio-de-imovel")
+                .contentType(MediaType.APPLICATION_JSON).content(payloadImovel))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn();
+
+        // transforma o resultado da requisição em string
+        String contentAsString = mvcResult.getResponse().getContentAsString();
+
+        // desserializar, transforma a string em um objeto para manipulação.
+        StandardException response = objectMapper.readValue(contentAsString, StandardException.class);
+
+        Assertions.assertEquals(response.getMsg(), "O campo roomName (nome do comodo) nao pode estar vazio.");
+        Assertions.assertEquals(response.getStatus(), 400);
+    }
+    /*
+     * testa validacao de roomName deve comecar com letra maiouscula
+     * @Author Rogério Lambert
+     * */
+    @Test
+    @DisplayName("Testa se um erro eh retornado quando um campo de roomName comecar com letra minuscula")
+    public void testaSeExcecaoParaRoomNameComecaComMinuscula () throws Exception {
+        ImovelDTO imovelDTO = geraImovelTeste();
+        ComodoDTO roomWithNameEmpyt = new ComodoDTO();
+        roomWithNameEmpyt.setRoomWidth(13D);
+        roomWithNameEmpyt.setRoomLength(13D);
+        roomWithNameEmpyt.setRoomName("sala");
+
+        List<ComodoDTO> rooms = imovelDTO.getRooms();
+        rooms.add(roomWithNameEmpyt);
+        imovelDTO.setRooms(rooms);
+
+        String payloadImovel = objectMapper.writeValueAsString(imovelDTO);
+
+        // faz requisição
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                .post("/relatorio-de-imovel")
+                .contentType(MediaType.APPLICATION_JSON).content(payloadImovel))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn();
+
+        // transforma o resultado da requisição em string
+        String contentAsString = mvcResult.getResponse().getContentAsString();
+
+        // desserializar, transforma a string em um objeto para manipulação.
+        StandardException response = objectMapper.readValue(contentAsString, StandardException.class);
+
+        Assertions.assertEquals(response.getMsg(), "O campo roomName (nome do comodo) deve comecar com uma letra maiuscula.");
+        Assertions.assertEquals(response.getStatus(), 400);
+    }
+    /*
+     * testa validacao de roomName deve comecar com letra maiouscula
+     * @Author Rogério Lambert
+     * */
+    @Test
+    @DisplayName("Testa se um erro eh retornado quando um campo de roomName comecar com letra minuscula")
+    public void testaSeExcecaoParaRoomNameMaiorQue30Caracteres () throws Exception {
+        ImovelDTO imovelDTO = geraImovelTeste();
+        ComodoDTO roomWithNameEmpyt = new ComodoDTO();
+        roomWithNameEmpyt.setRoomWidth(13D);
+        roomWithNameEmpyt.setRoomLength(13D);
+        roomWithNameEmpyt.setRoomName("S234567890123456789012345678901");
+
+        List<ComodoDTO> rooms = imovelDTO.getRooms();
+        rooms.add(roomWithNameEmpyt);
+        imovelDTO.setRooms(rooms);
+
+        String payloadImovel = objectMapper.writeValueAsString(imovelDTO);
+
+        // faz requisição
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders
+                .post("/relatorio-de-imovel")
+                .contentType(MediaType.APPLICATION_JSON).content(payloadImovel))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest()).andReturn();
+
+        // transforma o resultado da requisição em string
+        String contentAsString = mvcResult.getResponse().getContentAsString();
+
+        // desserializar, transforma a string em um objeto para manipulação.
+        StandardException response = objectMapper.readValue(contentAsString, StandardException.class);
+
+        Assertions.assertEquals(response.getMsg(), "O campo roomName (nome do comodo) nao pode exceder 30 caracteres.");
+        Assertions.assertEquals(response.getStatus(), 400);
+    }
 
 }
