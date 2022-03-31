@@ -2,6 +2,7 @@ package br.com.meli.seu_imovel.integracao;
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
 import br.com.meli.seu_imovel.dto.ImovelDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
