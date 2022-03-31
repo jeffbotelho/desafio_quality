@@ -24,7 +24,7 @@ public class ComodoDTO {
     @NotNull(message = "A largura não pode estar vazia. ()")
     @Max(value = 25,message = "A largura máxima permitida por cômodo é de 25 metros.")
     private Double roomWidth;
-    @NotNull(message = "O comprimento não pode estar vázio.")
+    @NotNull(message = "O comprimento não pode estar vazio.")
     @Max(value = 33,message = "O comprimento máximo permitidio por cômodo é de 33 metros.")
     private Double roomLength;
     private Double area;
