@@ -1,4 +1,4 @@
-package br.com.meli.seu_imovel.service;
+package br.com.meli.seu_imovel.unitario;
 
 
 import br.com.meli.seu_imovel.dto.ComodoDTO;
@@ -25,7 +25,7 @@ public class ImoveisService {
         Optional<String> district = bairroRepository.findByName(imovelDTO.getPropDistrict());
 
         if (district.isEmpty()) {
-            throw new DistrictNotExistExepection("Distrito não valido!");
+            throw new DistrictNotExistExepection("Distrito não válido!");
         }
 
         //Req04
@@ -52,6 +52,7 @@ public class ImoveisService {
         for (ComodoDTO c: comodos){
             c.setArea(c.getRoomWidth() * c.getRoomLength());
         }
+
     }
     // Requisito 01 , Calcula o total de metro de uma propriedade
     private Double calculaTamanhoPropriedade(List<ComodoDTO> listComodoDTO){
@@ -63,7 +64,7 @@ public class ImoveisService {
         return valueDistrictM2.multiply(BigDecimal.valueOf(tamanhoTotal));
     }
     // Requisito 03, Determina qual maior comodo
-    private ComodoDTO determinaMaiorComodo(ImovelDTO imovelDTO){
+   private ComodoDTO determinaMaiorComodo(ImovelDTO imovelDTO){
        return imovelDTO.getRooms().stream().max((x,y)-> x.getArea().compareTo(y.getArea())).get();
     }
 }
