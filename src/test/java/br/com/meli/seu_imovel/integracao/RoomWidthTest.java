@@ -32,8 +32,11 @@ public class RoomWidthTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    /*
+    * @author Weverton Bruno
+    * */
     @Test
-    @DisplayName("Deve retornar uma exceção quando a largura nao for informada")
+    @DisplayName("Deve retornar uma exceção quando a largura não for informada")
     public void itShouldReturnAValidationExceptionOfNotNull() throws Exception{
         ImovelDTO imovelDTO = geraImovelTeste();
         imovelDTO.getRooms().get(0).setRoomWidth(null);
@@ -48,6 +51,9 @@ public class RoomWidthTest {
                         .value("A largura não pode estar vazia. (Largura do Quarto)"));
     }
 
+    /*
+     * @author Weverton Bruno
+     * */
     @Test
     @DisplayName("Deve retornar uma exceção quando a largura for superior a 25")
     public void itShouldReturnAValidationExceptionWhenWidthIsGratherThan25() throws Exception{
