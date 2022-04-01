@@ -15,7 +15,6 @@ import java.util.List;
  * */
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class ImovelDTO {
     @NotBlank(message = "O nome da propriedade não pode estar vazio. (Nome)")
